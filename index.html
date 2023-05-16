@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Online Registration System</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #E7D7E9;
+			background-image: url('https://scontent.fmnl4-6.fna.fbcdn.net/v/t1.6435-9/203473095_4272299566126308_9081626141524077585_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=174925&_nc_eui2=AeFy2kEaw9speX4QkQr06Z6ICkXjO1f_DAgKReM7V_8MCE9hAr23dpsYCES0E4-Kpp7_W4RZ7vTnW9h3ePTYbl3b&_nc_ohc=adESzQmBOagAX8sc0ah&_nc_ht=scontent.fmnl4-6.fna&oh=00_AfDY22J0LuhciAMI5GbuHwTxbm0vjCiWO-ccPIQ8BQHNcg&oe=64864AB8');
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			color: #574759;
+		}
+
+
+		h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            text-align: center;
+            color: #574759;
+            margin-top: 50px;
+            font-size: 48px;
+            text-shadow: 2px 2px #F4E6F0;
+        }
+
+        h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            text-align: center;
+            color: #574759;
+            margin-top: 0px; /* updated value */
+            font-size: 20px;
+            text-shadow: 2px 2px #F4E6F0;
+        }
+
+		form {
+			max-width: 500px;
+			margin: 0 auto;
+			background-color: #643b59;
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+		}
+
+		label {
+			display: block;
+			margin-bottom: 10px;
+			color: #ffffff;
+			text-shadow: 1px 1px #000000;
+			font-size: 18px;
+		}
+
+		input[type="text"], input[type="email"], input[type="tel"], textarea {
+			width: 96%;
+			padding: 10px;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+			margin-bottom: 20px;
+			font-size: 16px;
+			color: #574759;
+			background-color: #F4E6F0;
+		}
+
+		input[type="submit"] {
+			background-color: #8B5D83;
+			color: #FFFFFF;
+			padding: 10px 20px;
+			border-radius: 5px;
+			border: none;
+			font-size: 16px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			text-shadow: 1px 1px #574759;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+		}
+
+		input[type="submit"]:hover {
+			background-color: #574759;
+		}
+
+		 #message {
+		 	text-align: center;
+		 	margin-top: 10px;
+		 	color: #ffffff;
+		 	font-size: 20px;
+            background-color: rgb(121, 50, 128);
+        }
+
+		 .side-image {
+ 			position: absolute;
+ 			bottom: 0%;
+  			left: 85%;
+  			transform: translateX(-50%) translateY(50%);
+  			width: 300px;
+ 			height: 200px;
+  			background-image: url('https://scontent.fmnl4-4.fna.fbcdn.net/v/t39.30808-6/277108510_5144813155541607_1749687612836432116_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeHCDCb5uwnYfPGdwG9qHPmeAZYQe_2B030BlhB7_YHTfX7oajssAFVZPeoOn00doZG5gAyDLYaNPLwOjl6r2F2f&_nc_ohc=1V7BaNNCDDYAX_pATTn&_nc_ht=scontent.fmnl4-4.fna&oh=00_AfBGXN5F56bHMqiZr1gwWS8RCK5jrts7L65rzt7tPKwyYg&oe=64641D5B');
+  			background-size: cover;
+  			background-position: center bottom;
+  			transition: transform 0.3s ease;
+		}
+
+		.side-image:hover {
+  			transform: translateX(-50%) translateY(-.5%);
+		}
+
+	</style>
+</head>
+<body>
+	<h1>SWEETRICIA'S</h1>
+    <h3>Raffle Registration</h2>
+	<form method="POST" action="https://script.google.com/macros/s/AKfycbyJ0Q26Ttr147ad4ULOukBFMYPQLMtEvvpQC6BNsGKCmQgpTiKAp7GiMIcYEiIyfs5u/exec">
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name" required>
+
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" required>
+
+		<label for="phone">Phone Number:</label>
+		<input type="tel" id="phone" name="phone" required>
+
+		<label for="address">Address:</label>
+		<textarea id="address" name="address" rows="5" cols="30" required></textarea>
+
+		<input type="submit" value="Register">
+	</form>
+	<div id="message"></div>
+	<div class="side-image"></div>
+	<script>
+		const form = document.querySelector("form");
+		const message = document.querySelector("#message");
+
+		form.addEventListener("submit", (e) => {
+			e.preventDefault();
+
+			fetch(form.action, {
+				method: "POST",
+				body: new FormData(form),
+			})
+			.then((response) => {
+				if (response.ok) {
+					form.reset();
+					response.text().then(text => {
+                    message.textContent = text + ". Please save this reference. Congratulations, All the best!" ;});
+				} else {
+					throw new Error("Network response was not ok");
+				}
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				message.textContent = "There was an error submitting the form. Please try again.";
+			});
+		});
+	</script>	
+</body>
+</html>
