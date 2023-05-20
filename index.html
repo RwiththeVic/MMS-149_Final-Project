@@ -8,7 +8,7 @@
 		body {
 			font-family: Arial, sans-serif;
 			background-color: #E7D7E9;
-			background-image: url('https://drive.google.com/file/d/15riAjyzJ2clkCawonFbdFAhg3Phb3UpF/view?usp=sharing');
+			background-image: url('https://scontent.fmnl4-6.fna.fbcdn.net/v/t1.6435-9/203473095_4272299566126308_9081626141524077585_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=174925&_nc_eui2=AeFy2kEaw9speX4QkQr06Z6ICkXjO1f_DAgKReM7V_8MCE9hAr23dpsYCES0E4-Kpp7_W4RZ7vTnW9h3ePTYbl3b&_nc_ohc=adESzQmBOagAX8sc0ah&_nc_ht=scontent.fmnl4-6.fna&oh=00_AfDY22J0LuhciAMI5GbuHwTxbm0vjCiWO-ccPIQ8BQHNcg&oe=64864AB8');
 			background-size: cover;
 			background-position: center center;
 			background-repeat: no-repeat;
@@ -106,6 +106,17 @@
   			transform: translateX(-50%) translateY(-.5%);
 		}
 
+        /* Hide the "+" symbol in the phone number input field */
+        input[type="tel"]::-webkit-outer-spin-button,
+        input[type="tel"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="tel"] {
+            -moz-appearance: textfield;
+        }
+
 	</style>
 </head>
 <body>
@@ -119,7 +130,7 @@
 		<input type="email" id="email" name="email" required>
 
 		<label for="phone">Phone Number:</label>
-		<input type="tel" id="phone" name="phone" required>
+        <input type="tel" id="phone" name="phone" pattern="\+63\d{10}" placeholder="+63XXXXXXXXXX" required>
 
 		<label for="address">Address:</label>
 		<textarea id="address" name="address" rows="5" cols="30" required></textarea>
@@ -131,19 +142,29 @@
 	<script>
 		const form = document.querySelector("form");
 		const message = document.querySelector("#message");
-
+	
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
-
+	
+			const name = document.querySelector("#name").value;
+			const email = document.querySelector("#email").value;
+			const address = document.querySelector("#address").value;
+	
+			const formData = new FormData();
+			formData.append("name", name);
+			formData.append("email", email);
+			formData.append("address", address);
+	
 			fetch(form.action, {
 				method: "POST",
-				body: new FormData(form),
+				body: formData,
 			})
 			.then((response) => {
 				if (response.ok) {
 					form.reset();
 					response.text().then(text => {
-                    message.textContent = text + ". Please save this reference. Congratulations, All the best!" ;});
+						message.textContent = text + ". Please save this reference. Congratulations, All the best!";
+					});
 				} else {
 					throw new Error("Network response was not ok");
 				}
@@ -153,6 +174,7 @@
 				message.textContent = "There was an error submitting the form. Please try again.";
 			});
 		});
-	</script>	
+	</script>
+	
 </body>
 </html>
